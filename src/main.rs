@@ -37,7 +37,7 @@ fn main() {
         None => panic!(),
     };
 
-    // Will panic when compiled on a Unix/Linux machine or if extension is removed from executable name
+    // Will panic when compiled on a Unix/Linux machine and/or if extension is absent from executable name
     let file_ext = match some_value.to_str() {
         Some(content) => String::from(content),
         None => panic!(),
