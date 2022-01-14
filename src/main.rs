@@ -1,5 +1,6 @@
 use std::env;
 use std::path::Path;
+use std::ffi::OsString;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -32,15 +33,16 @@ fn main() {
     };
 
     // Extract the extension string in the path using method 2
-    // Will panic when compiled on a Unix/Linux machine and/or if extension is absent from executable name
+    // Here, value is of type &OsStr, but this code constructs and actual OsString object from the reference
+    // It's the only way to make both arms of the match return an identical Type to some_value
     let some_value = match full_path.extension() {
-        Some(value) => value,
-        None => panic!(),
+        Some(value) => OsString::from(value),
+        None => OsString::new(),
     };
-    
+
     let file_ext = match some_value.to_str() {
         Some(content) => String::from(content),
-        None => panic!(),
+        None => String::new(),
     };
 
     println!("Executable parent: {}", file_parent);
